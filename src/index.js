@@ -1,7 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import HelloWorld from './hello'
 
 ReactDOM.render(
-    <h1>Hello, world!</h1>,
+    <HelloWorld/>,
     document.getElementById('root')
 );

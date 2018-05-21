@@ -1,9 +1,14 @@
 import React from 'react'
 
 class HelloWorld extends React.Component{
+
+    constructor(props){
+    super(props);
+    }
+
     render(){
         return (
-            <h1>Hello from Component</h1>
+            <h1>{this.props.message}</h1>
         )
     }
 }

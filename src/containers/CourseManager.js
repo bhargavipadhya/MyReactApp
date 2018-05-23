@@ -13,7 +13,7 @@ class CourseManager extends Component {
     render(){
         return (
             <Router>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{backgroundColor:'#faebd7', paddingTop:'15px', paddingBottom:'15px'}}>
                     <Route path="/courses"
                            component={CourseList}>
                     </Route>

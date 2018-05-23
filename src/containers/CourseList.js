@@ -5,11 +5,11 @@ import CourseService from "../services/CourseService";
 class CourseList extends React.Component {
     constructor() {
         super();
-        this.courseService = CourseService.instance;
         this.state = {courses: [],course:{title: '', created: '', modified:''}};
         this.titleChanged = this.titleChanged.bind(this);
         this.createCourse = this.createCourse.bind(this);
         this.deleteCourse = this.deleteCourse.bind(this);
+        this.courseService = CourseService.instance;
     }
 
     //insert citation here: https://stackoverflow.com/questions/10211145/getting-current-date-and-time-in-javascript
@@ -53,6 +53,14 @@ class CourseList extends React.Component {
             });
     }
 
+    findCourseById(courseId){
+        this.courseService
+            .findCourseById(courseId)
+            .then((courses) => {
+                this.setState({courses: courses});
+            });
+    }
+
     deleteCourse(courseId) {
         this.courseService
             .deleteCourse(courseId)
@@ -81,9 +89,22 @@ class CourseList extends React.Component {
 
     }
     createCourse() {
-        this.courseService
-            .createCourse(this.state.course)
-            .then(() => { this.findAllCourses(); });
+        if(this.state.course.title == ""){
+            var course = {
+                title: "New Course",
+                created: this.getDateTime(),
+                modified: this.getDateTime()
+            };
+            this.courseService
+                .createCourse(course)
+                .then(() => { this.findAllCourses(); });
+        }
+        else{
+            this.courseService
+                .createCourse(this.state.course)
+                .then(() => { this.findAllCourses(); });
+        }
+
     }
 
     render() {
@@ -103,18 +124,10 @@ class CourseList extends React.Component {
 
                 <table className="table table-striped">
                     <thead>
-                    <tr><th>Title</th>
-                    <th>Owned by</th>
-                    <th>Last Modified</th>
-                    <th></th></tr>
-
-                    {/*<tr>*/}
-                        {/*<th><input className="form-control" id="titleFld"*/}
-                                   {/*placeholder="cs101"*/}
-                                   {/*onChange={this.titleChanged}/></th>*/}
-                        {/*<th><button className="btn btn-primary"*/}
-                                    {/*onClick={this.createCourse}>Add Course</button></th>*/}
-                    {/*</tr>*/}
+                        <tr><th>Title</th>
+                        <th>Owned By <i className="fa fa-caret-down"></i></th>
+                        <th>Last Modified</th>
+                        <th></th></tr>
                     </thead>
                     <tbody>
                         {this.renderCourseRows()}

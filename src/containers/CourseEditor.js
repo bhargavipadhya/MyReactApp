@@ -1,7 +1,5 @@
 import React from 'react'
-import LessonTabs from "./LessonTabs";
 import ModuleList from "./ModuleList";
-import ModuleEditor from "./ModuleEditor";
 
 export default class CourseEditor
     extends React.Component{
@@ -19,17 +17,16 @@ export default class CourseEditor
         (this.props.match.params.courseId);
     }
 
+    componentWillReceiveProps(newProps) {
+        this.selectCourse
+        (newProps.match.params.courseId);
+    }
+
     render(){
         return(
-            <div className='container-fluid'>
-                {/*<nav className="navbar navbar-expand" style={{backgroundColor:'#e3f2fd'}}>*/}
-                    {/*<a className="navbar-brand">Editing the Course: # {this.state.courseId}</a>*/}
-                {/*</nav>*/}
-                <div className="row">
-                    <div  style={{backgroundColor:'#e3f2fd'}}>
-                        <nav className="navbar navbar-light bg-light navbar-expand">
-                            <a className="navbar-brand">Editing the Course: # {this.state.courseId}</a>
-                        </nav>
+            <div>
+                <div className='container-fluid'>
+                    <div style={{backgroundColor:'#e3f2fd'}}>
                         <ModuleList courseId={this.state.courseId}/>
                     </div>
                 </div>

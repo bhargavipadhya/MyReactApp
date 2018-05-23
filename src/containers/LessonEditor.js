@@ -6,7 +6,7 @@ export default class LessonEditor extends React.Component{
         super(props);
         this.selectModule = this.selectModule.bind(this);
         this.selectCourse = this.selectCourse.bind(this);
-        this.selectLesson = this.selectLesson.bind(this);//topics
+        this.selectLesson = this.selectLesson.bind(this);
         this.state = {moduleId: '', courseId:'',lessonId:''};
     }
 
@@ -24,7 +24,7 @@ export default class LessonEditor extends React.Component{
     componentDidMount() {
         this.selectModule(this.props.match.params.moduleId);
         this.selectCourse(this.props.match.params.courseId);
-        this.selectLesson(this.props.match.params.lessonId);//topics
+        this.selectLesson(this.props.match.params.lessonId);
     }
     componentWillReceiveProps(newProps){
         this.selectModule
@@ -38,8 +38,7 @@ export default class LessonEditor extends React.Component{
     render(){
         return(
             <div>
-                <h1>Welcome to Lesson Editor</h1>
-                <h3>Topics for lesson: {this.state.lessonId}</h3>
+                <h1>-----------------------------------------------</h1>
                 <TopicPills courseId={this.state.courseId}
                             moduleId={this.state.moduleId}
                             lessonId={this.state.lessonId}/>

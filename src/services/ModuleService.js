@@ -15,6 +15,13 @@ export default class ModuleService {
         return this[_singleton]
     }
 
+    findModuleById(moduleId) {
+        return fetch(DEL_MODULE_API_URL + '/' + moduleId)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
     createModule(courseId, module) {
         return fetch(MODULE_API_URL.replace('CID', courseId),
             {   body: JSON.stringify(module),

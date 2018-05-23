@@ -25,6 +25,13 @@ class LessonService {
             })
     }
 
+    findLessonById(lessonId) {
+        return fetch(DEL_LESSON_API_URL + '/' + lessonId)
+            .then(function(response){
+                return response.json();
+            });
+    }
+
     createLesson(courseId, moduleId,lesson) {
         return fetch(LESSON_API_URL.replace('CID', courseId).replace('MID', moduleId),
             {   body: JSON.stringify(lesson),

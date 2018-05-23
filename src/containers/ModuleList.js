@@ -1,6 +1,8 @@
 import React from 'react'
 import ModuleListItem from '../components/ModuleListItem';
 import ModuleService from '../services/ModuleService';
+import CourseService from "../services/CourseService";
+
 
 export default class ModuleList
     extends React.Component {
@@ -8,11 +10,13 @@ export default class ModuleList
         super(props);
         this.state = {
             courseId: '',
-            //moduleId:'',
             module: { title: ''},
-            modules: []
+            modules: [],
+            course:{}
         };
 
+        this.setCourse = this.setCourse.bind(this);
+        this.courseService = CourseService.instance;
         this.titleChanged = this.titleChanged.bind(this);
         this.createModule = this.createModule.bind(this);
         this.setCourseId = this.setCourseId.bind(this);
@@ -43,17 +47,35 @@ export default class ModuleList
 
     componentDidMount() {
         this.setCourseId(this.props.courseId);
-        //this.findAllModulesForCourse();
+        this.setCourse(this.state.courseId);
+
     }
     componentWillReceiveProps(newProps){
         this.setCourseId(newProps.courseId);
-        this.findAllModulesForCourse(newProps.courseId)
+        this.findAllModulesForCourse(newProps.courseId);
+        this.setCourse(newProps.courseId);
+    }
+
+    setCourse(courseId) {
+        this.courseService
+            .findCourseById(courseId)
+            .then((course)=>{ this.setState({course: course});});
     }
 
     createModule(){
-        this.moduleService
-            .createModule(this.props.courseId, this.state.module)
-            .then(()=>{this.findAllModulesForCourse(this.state.courseId); });
+        if(this.state.module.title == ""){
+            var module ={
+                title:"New Module"
+            };
+            this.moduleService
+                .createModule(this.props.courseId, module)
+                .then(()=>{this.findAllModulesForCourse(this.state.courseId); });
+        }
+        else{
+            this.moduleService
+                .createModule(this.props.courseId, this.state.module)
+                .then(()=>{this.findAllModulesForCourse(this.state.courseId); });
+        }
     }
 
     titleChanged(event) {
@@ -73,10 +95,12 @@ export default class ModuleList
 
     render() {
         return (
-        <div className="container-fluid">
+        <div>
+            <nav className="navbar navbar-light bg-light navbar-expand" style={{paddingLeft: '15px 15px'}}>
+                <a className="navbar-brand">Course Editor for: {this.state.course.title}</a>
+            </nav>
             <br/>
-            <h4>Modules for course:
-                {this.state.courseId}</h4>
+            <h5 style={{paddingLeft:'15px'}}>Modules for course: {this.state.course.title}</h5>
             <table className="table">
                 <tbody>
                     <tr>
@@ -84,7 +108,7 @@ export default class ModuleList
                                    value={this.state.module.title}
                                    placeholder="Enter Module"
                                    onChange={this.titleChanged}/></td>
-                        <td><button className="btn btn-primary btn-block mb-2"
+                        <td><button className="btn btn-outline-primary mb-2"
                                     onClick={this.createModule}>
                             <i className="fa fa-plus"></i>
                         </button></td>

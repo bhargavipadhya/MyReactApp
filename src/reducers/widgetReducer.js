@@ -1,6 +1,6 @@
 import * as constants from "../constants";
 
-export const widgetReducer = (state = {widgets: []}, action) => {
+export const widgetReducer = (state = {widgets: [], preview: false}, action) => {
     let newState
     switch (action.type) {
 
@@ -8,7 +8,7 @@ export const widgetReducer = (state = {widgets: []}, action) => {
             return {
                 widgets: [
                     ...state.widgets,
-                    {id: state.widgets.length +1, text: 'New Widget', widgetType: 'Heading'}
+                    {id: state.widgets.length +1, text: 'New Widget', widgetType: 'Heading', size: '1'}
                 ]
             }
 
@@ -37,7 +37,7 @@ export const widgetReducer = (state = {widgets: []}, action) => {
 
             return state;
 
-        case 'SELECT_WIDGET_TYPE':
+        case constants.SELECT_WIDGET_TYPE:
             console.log(action)
             let newState = {
                 widgets: state.widgets.filter((widget) => {
@@ -48,6 +48,62 @@ export const widgetReducer = (state = {widgets: []}, action) => {
                 })
             }
             return JSON.parse(JSON.stringify(newState))
+
+        case constants.HEADING_SIZE_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.size = action.size
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.HEADING_TEXT_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.text = action.text
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.PREVIEW_WIDGET:
+            return {
+                widgets: state.widgets,
+                preview: !state.preview
+            }
+
+        case constants.PARA_TEXT_CHANGED:
+            return{
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.paraText = action.paraText
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.IMAGE_URL_CHANGED:
+            return{
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.imageURL = action.imageURL
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.LINK_URL_CHANGED:
+            return{
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.linkURL = action.linkURL
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
 
         default:
             return state

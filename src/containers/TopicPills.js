@@ -11,7 +11,8 @@ export default class TopicPills extends React.Component{
             topic: {title:''},
             moduleId:'',courseId:'',lessonId:'',topicId:'',
             lesson:{}
-        };
+        }
+        ;
 
         this.setCourseId = this.setCourseId.bind(this);
         this.setModuleId = this.setModuleId.bind(this);
@@ -102,6 +103,9 @@ export default class TopicPills extends React.Component{
         let topics = this.state.topics.map((topic)=> {
             return <TopicPillItem key={topic.id}
                                   title={topic.title}
+                                  courseId={this.props.courseId}
+                                  moduleId={this.props.moduleId}
+                                  lessonId={this.props.lessonId}
                                   topicId={topic.id}
                                   delete={this.deleteTopic}/>
         });

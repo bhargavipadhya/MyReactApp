@@ -83,7 +83,7 @@ export default class ModuleList
     }
 
     renderListOfModules(){
-        let modules = this.state.modules.map((module)=> {
+        let modules = this.state.modules.map((module) => {
             return <ModuleListItem key={module.id}
                                    title={module.title}
                                    courseId={this.state.courseId}

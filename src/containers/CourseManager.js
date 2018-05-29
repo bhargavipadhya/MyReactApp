@@ -8,6 +8,7 @@ import ModuleEditor from "./ModuleEditor";
 import {BrowserRouter as Router, Route}
     from 'react-router-dom'
 import LessonEditor from "./LessonEditor";
+import WidgetListEditor from './WidgetListEditor'
 
 class CourseManager extends Component {
     render(){
@@ -31,6 +32,9 @@ class CourseManager extends Component {
                         <Route path="/course/:courseId/module/:moduleId/lesson/:lessonId"
                                component={LessonEditor}>
                          </Route>
+                        <Route path="/course/:courseId/module/:moduleId/lesson/:lessonId/topic/:topicId"
+                               component={WidgetListEditor}>
+                        </Route>
                         </div>
                     </div>
                 </div>

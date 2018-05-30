@@ -24,7 +24,7 @@ class WidgetList extends Component {
     render(){
     return(
         <div>
-            <div className="float-right" style={{marginRight:"10px",marginTop:"10px", width: '50%', padding: '5px'}}>
+            <div className="float-right" style={{marginRight:"20px",marginTop:"10px"}}>
                 <button hidden={this.props.previewMode}
                         onClick={()=>actions.save(this.props.dispatch, this.props.topicId)}
                 className='btn btn-success'>Save</button>
@@ -47,7 +47,9 @@ class WidgetList extends Component {
             </div>
             <button onClick={()=>{
                 actions.addWidget(this.props.dispatch,this.props.topicId)
-            }}>Add Widget</button>
+                    }}
+            className='btn btn-danger float-right'
+            style={{marginRight:'20px'}}><i className="fa fa-plus-circle"></i></button>
         </div>
     )}
 }

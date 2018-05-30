@@ -76,6 +76,16 @@ export const preview = (dispatch, topicId) => (
     dispatch({type: constants.PREVIEW_WIDGET, topicId: topicId})
 )
 
+export const widgetNameChanged = (dispatch, widgetId, widgetname) => (
+    dispatch(
+        {
+            type:constants.WIDGET_NAME,
+            id:widgetId,
+            widgetNameText:widgetname
+        }
+    )
+)
+
 export const selectWidgetType =(dispatch, widgetId, selectElementValue, topicId) => (
     dispatch({
         type:constants.SELECT_WIDGET_TYPE,

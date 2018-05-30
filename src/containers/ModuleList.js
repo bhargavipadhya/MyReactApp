@@ -96,9 +96,9 @@ export default class ModuleList
     render() {
         return (
         <div>
-            <nav className="navbar navbar-light bg-light navbar-expand" style={{paddingLeft: '15px 15px'}}>
-                <a className="navbar-brand">Course Editor for: {this.state.course.title}</a>
-            </nav>
+            {/*<nav className="navbar navbar-light bg-light navbar-expand" style={{paddingLeft: '15px 15px'}}>*/}
+                {/*<a className="navbar-brand">Course Editor for: {this.state.course.title}</a>*/}
+            {/*</nav>*/}
             <br/>
             <h5 style={{paddingLeft:'15px'}}>Modules for course: {this.state.course.title}</h5>
             <table className="table">

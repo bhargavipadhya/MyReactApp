@@ -11,9 +11,9 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                     ...state.widgets,
                     {
                         id: state.widgets.length +1,
-                        text: 'New Widget',
                         widgetType: 'Heading',
                         size: '1',
+                        widgetNameText: '',
                         topicId: action.topicId
                     }
                 ],
@@ -148,6 +148,16 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                     return Object.assign({}, widget)
                 })
             }
+
+        case constants.WIDGET_NAME:
+            return {
+                widgets:state.widgets.map(widget => {
+                if (widget.id === action.id){
+                    widget.widgetNameText = action.widgetNameText
+                }
+                return Object.assign({},widget);
+            })
+        }
 
         default:
             return state

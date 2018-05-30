@@ -115,9 +115,9 @@ export default class TopicPills extends React.Component{
     render(){
         return(
             <div>
-                <nav className="navbar navbar-light bg-light navbar-expand">
-                    <a className="navbar-brand">Lesson Editor for: {this.state.lesson.title}</a>
-                </nav>
+                {/*<nav className="navbar navbar-light bg-light navbar-expand">*/}
+                    {/*<a className="navbar-brand">Lesson Editor for: {this.state.lesson.title}</a>*/}
+                {/*</nav>*/}
                 <ul className="nav nav-pills" style={{backgroundColor:'#e3f2fd', padding:'10px 5px'}}>
                     {this.renderListOfTopics()}
                     &emsp;&emsp;&emsp;<li>

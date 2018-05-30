@@ -114,9 +114,9 @@ export default class LessonTabs
         render() {
         return(
             <div>
-                <nav className="navbar navbar-light bg-light navbar-expand">
-                    <a className="navbar-brand">Module Editor for: {this.state.module.title}</a>
-                </nav>
+                {/*<nav className="navbar navbar-light bg-light navbar-expand">*/}
+                    {/*<a className="navbar-brand">Module Editor for: {this.state.module.title}</a>*/}
+                {/*</nav>*/}
 
                 <ul className="nav nav-tabs" style={{backgroundColor:'#e3f2fd', padding:'10px 5px'}}>
                     {this.renderListOfLessons()}

@@ -5,40 +5,53 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
     switch (action.type) {
 
         case constants.ADD_WIDGET:
-            return {
+            console.log("im apparently not here")
+            let newstate={
                 widgets: [
                     ...state.widgets,
-                    {id: state.widgets.length +1, text: 'New Widget', widgetType: 'Heading', size: '1'}
-                ]
+                    {
+                        id: state.widgets.length +1,
+                        text: 'New Widget',
+                        widgetType: 'Heading',
+                        size: '1',
+                        topicId: action.topicId
+                    }
+                ],
+                topicId: action.topicId,
+                preview:state.preview
             }
-
+            return newstate;
 
         case constants.DELETE_WIDGET:
             return {
                 widgets: state.widgets.filter(widget => (
                     widget.id !== action.id
-                ))
+                )),
+                topicId: action.topicId
             }
-
 
         case constants.FIND_ALL_WIDGETS:
             newState = Object.assign({}, state)
             newState.widgets = action.widgets
             return newState
 
-        case constants.SAVE_WIDGETS:
-            console.log("save")
-            fetch('http://localhost:8080/api/topic/TID/widget/save'.replace('TID',action.topicId),{
-            method:'POST',
-            body:JSON.stringify(state.widgets),
-            headers:{
-                'content-type': 'application/json'
-            }});
+        case constants.FIND_WIDGET_BY_TOPIC_ID:
+            return {
+                widgets: action.widgets,
+                topicId: action.topicId
+            }
 
+        case constants.SAVE_WIDGETS:
+            fetch('http://localhost:8080/api/topic/TID/widget/save'.replace('TID', action.topicId), {
+                method: 'POST',
+                body: JSON.stringify(state.widgets),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
             return state;
 
         case constants.SELECT_WIDGET_TYPE:
-            console.log(action)
             let newState = {
                 widgets: state.widgets.filter((widget) => {
                     if(widget.id === action.id){
@@ -72,6 +85,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
         case constants.PREVIEW_WIDGET:
             return {
                 widgets: state.widgets,
+                topicId: action.topicId,
                 preview: !state.preview
             }
 
@@ -100,6 +114,36 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                 widgets: state.widgets.map(widget => {
                     if(widget.id === action.id){
                         widget.linkURL = action.linkURL
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.LINK_TEXT_CHANGED:
+            return{
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.linkText = action.linkText
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.LIST_TEXT_CHANGED:
+            return{
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.listText = action.listText
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.LIST_TYPE_CHANGED:
+            return{
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id){
+                        widget.listType = action.listType
                     }
                     return Object.assign({}, widget)
                 })

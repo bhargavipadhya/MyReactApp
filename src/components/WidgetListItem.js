@@ -40,15 +40,17 @@ const stateToPropsMapperHeading = state => ({
 
 const HeadingContainer = connect(stateToPropsMapperHeading, dispatchToPropsMapperHeading)(Heading)
 
-const Paragraph = ({widget, paraTextChanged}) => {
+const Paragraph = ({widget, paraTextChanged, preview}) => {
     let paraElem
     return (
         <div>
-            <h2>Paragraph</h2>
-            <textarea onChange={() => paraTextChanged(widget.id, paraElem.value)}
-                      ref={node => paraElem = node}
-                      value={widget.paraText}/>
-            {/*put paraText in model*/}
+            <div hidden={preview}>
+                <h2>Paragraph</h2>
+                <textarea onChange={() => paraTextChanged(widget.id, paraElem.value)}
+                          ref={node => paraElem = node}
+                          value={widget.paraText}/>
+                <p>Preview Section:</p>
+            </div>
             {widget.widgetType === 'Paragraph' && <p>{widget.paraText}</p>}
         </div>
     )
@@ -60,16 +62,18 @@ const dispatchToPropsMapperParagraph = dispatch => ({
 
 const ParaContainer = connect(null, dispatchToPropsMapperParagraph)(Paragraph)
 
-const Image = ({widget, imageURLChanged}) => {
+const Image = ({widget, imageURLChanged, preview}) => {
     let imageElem
     return(
         <div>
-            <h2>Image</h2>
-            <input onChange={() => imageURLChanged(widget.id, imageElem.value)}
-                   ref={node => imageElem = node}
-                   value={widget.imageURL}/>
-            {/*put imageURL in model*/}
-            {widget.widgetType === 'Image' && <img src={widget.imageURL}/>}
+            <div hidden={preview}>
+                <h2>Image</h2>
+                <input onChange={() => imageURLChanged(widget.id, imageElem.value)}
+                       ref={node => imageElem = node}
+                       value={widget.imageURL}/>
+                <p>Preview Section:</p>
+            </div>
+            {widget.widgetType === 'Image' && <img src={widget.imageURL} style={{width:"200px",height:"200px"}}/>}
         </div>
     )
 }
@@ -80,42 +84,94 @@ const dispatchToPropsMapperImage = dispatch => ({
 
 const ImageContainer = connect(null,dispatchToPropsMapperImage)(Image)
 
-const Link = ({widget, linkURLChanged}) => {
+const Link = ({widget, linkURLChanged, linkTextChanged, preview}) => {
     let linkElem
+    let linkTextElem
     return(
         <div>
-            <h2>Link</h2>
-            <input onChange={() => linkURLChanged(widget.id, linkElem.value)}
-                   ref={node => linkElem = node}
-                   value={widget.linkURL}/>
-            {/*put linkURL in model*/}
-            {widget.widgetType === 'Link' && <a href={widget.linkURL}/>}
+            <div hidden={preview}>
+                <h2>Link</h2>
+                <input onChange={() => linkURLChanged(widget.id, linkElem.value)}
+                       ref={node => linkElem = node}
+                       value={widget.linkURL}/>
+                <input onChange={() => linkTextChanged(widget.id, linkTextElem.value)}
+                       ref={node => linkTextElem = node}
+                       value={widget.linkText}/>
+                <p>Preview Section:</p>
+            </div>
+            {widget.widgetType === 'Link' && <a href={widget.linkURL}>{widget.linkText}</a>}
         </div>
     )
 }
 
 const dispatchToPropsMapperLink = dispatch => ({
-    linkURLChanged: (widgetId, linkurl) => actions.linkURLChanged(dispatch, widgetId, linkurl)
+    linkURLChanged: (widgetId, linkurl) => actions.linkURLChanged(dispatch, widgetId, linkurl),
+    linkTextChanged: (widgetId, linktext) => actions.linkTextChanged(dispatch, widgetId, linktext)
 })
 
 const LinkContainer = connect(null,dispatchToPropsMapperLink)(Link)
 
-const List = () => {
+const List = ({widget, listTextChanged, listTypeChanged, preview}) => {
+    let listTextElem
+    let listTypeElem
     return(
         <div>
-            <h2>List</h2>
-            <textarea></textarea>
+            <div hidden={preview}>
+                <h2>List</h2>
+                <textarea onChange={() => listTextChanged(widget.id, listTextElem.value)}
+                          ref={node => listTextElem = node}
+                          value={widget.listText}/>
+                <select onChange={() => listTypeChanged(widget.id, listTypeElem.value)}
+                        ref={node => listTypeElem = node}
+                        value={widget.listType}>
+                    <option>Unordered List</option>
+                    <option>Ordered List</option>
+                </select>
+                <p>Preview Section:</p>
+            </div>
+            {widget.listType === 'Unordered List' && <UnorderedList key={widget.id} stringlist={widget.listText}/>}
+            {widget.listType === 'Ordered List' && <OrderedList key={widget.id} stringlist={widget.listText}/>}
+
         </div>
     )
 }
 
+const UnorderedList = ({stringlist}) => {
+    return (
+        <ul>
+            {stringlist.split("\n").map(item => (
+                <li>{item}</li>
+            ))}
+        </ul>
+    )
+}
+
+
+const OrderedList = ({stringlist}) => {
+    return (
+        <ol>
+            {stringlist.split("\n").map(item => (
+                <li>{item}</li>
+            ))}
+        </ol>
+    )
+}
+
+const dispatchToPropsMapperList = dispatch => ({
+    listTextChanged: (widgetId, listtext) => actions.listTextChanged(dispatch, widgetId, listtext),
+    listTypeChanged: (widgetId, type) => actions.listTypeChanged(dispatch, widgetId, type)
+})
+
+const ListContainer = connect(null,dispatchToPropsMapperList)(List)
+
+
 class WidgetListItem extends Component {
     constructor(props){
         super(props);
-        //this.props.findAllWidgets()
     }
 
     render(){
+        let selectElement;
         return(
             <li>
                 <div hidden={this.props.previewMode}>
@@ -123,7 +179,7 @@ class WidgetListItem extends Component {
                         <select value={this.props.widgetType}
                                 onChange={
                                     e => (this.props.dispatch({
-                                    type:'SELECT_WIDGET_TYPE',
+                                    type:constants.SELECT_WIDGET_TYPE,
                                     id: this.props.widgetId,
                                     widgetType: selectElement.value}))
                                 }
@@ -135,8 +191,7 @@ class WidgetListItem extends Component {
                             <option>Link</option>
                         </select>
 
-                        <button onClick = {this.props.deleteWidget(this.props.widgetId)}>
-                            {/*e => (this.props.dispatch({type: constants.DELETE_WIDGET, id: this.props.widgetId}))}>*/}
+                        <button onClick={() => actions.deleteWidget(this.props.dispatch, this.props.widgetId, this.props.topicId)}>
                             Delete</button>
                 </div>
                 <div>
@@ -144,6 +199,7 @@ class WidgetListItem extends Component {
                     {this.props.widgetType === 'Paragraph' && <ParaContainer widget={this.props.widget}/>}
                     {this.props.widgetType === 'Image' && <ImageContainer widget={this.props.widget}/>}
                     {this.props.widgetType === 'Link' && <LinkContainer widget={this.props.widget}/>}
+                    {this.props.widgetType === 'List' && <ListContainer widget={this.props.widget}/>}
                 </div>
             </li>
         )
@@ -153,10 +209,9 @@ class WidgetListItem extends Component {
 
 
 const dispatcherToPropsMapper = dispatch => ({
-    deleteWidget: (widgetId) => actions.deleteWidget(dispatch, widgetId),
+    //deleteWidget: (widgetId) => actions.deleteWidget(dispatch, widgetId),
     // selectWidgetType: (widgetId, selectElementValue) => actions.selectWidgetType(dispatch, widgetId, selectElementValue),
     // findAllWidgets: () => actions.findAllWidgets(dispatch),
-    preview: (topicId,previewMode) => actions.preview(topicId,previewMode,dispatch)
 })
 
 const stateToPropsMapper = (state) => ({
@@ -164,8 +219,6 @@ const stateToPropsMapper = (state) => ({
     previewMode:state.preview
 })
 
-const WidgetContainer = connect(stateToPropsMapper,dispatcherToPropsMapper)(WidgetListItem)
+const WidgetContainer = connect(stateToPropsMapper)(WidgetListItem)
 
 export default WidgetContainer
-let selectElement
-//const selectElementValue = selectElement.value

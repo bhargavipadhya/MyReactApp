@@ -8,13 +8,24 @@ class WidgetList extends Component {
     constructor(props){
         super(props);
         //this.props.findAllWidgets()
+        //actions.findAllWidgets(this.props.dispatch);
     }
+
+    componentDidMount(){
+    }
+
+    componentWillReceiveProps(newProps){
+       if(newProps.topicId !== this.props.topicId) {
+           this.props.findWidgetByTopicId(newProps.topicId);
+       }
+    }
+
     render(){
     return(
         <div>
             <p>Widget List {this.props.widgets.length}</p>
-            <button hidden={this.props.previewMode} onClick={this.props.save(this.props.topicId)}>Save</button>
-            <button onClick={this.props.preview}>Preview</button>
+            <button hidden={this.props.previewMode} onClick={()=>actions.save(this.props.dispatch, this.props.topicId)}>Save</button>
+            <button onClick={()=>actions.preview(this.props.dispatch, this.props.topicId)}>Preview</button>
             <ul>
                 {this.props.widgets.map(widget=> (
                     <WidgetContainer key={widget.id}
@@ -22,24 +33,31 @@ class WidgetList extends Component {
                                      widgetId={widget.id}
                                      widgetType={widget.widgetType}
                                      widget={widget}
-                                     preview={this.props.previewMode}/>
+                                     preview={this.props.previewMode}
+                                     topicId={this.props.topicId}/>
                 ))}
             </ul>
-            <button onClick={this.props.addWidget}>Add Widget</button>
+            <button onClick={()=>{
+                actions.addWidget(this.props.dispatch, this.props.topicId)
+            }}>Add Widget</button>
         </div>
     )}
 }
 
-const dispatcherToPropsMapper = dispatch => ({
-    addWidget: () => actions.addWidget(dispatch),
-    save: (topicId) => actions.save(dispatch, topicId),
-    findAllWidgets: () => actions.findAllWidgets(dispatch),
-    preview: () => actions.preview(dispatch)
-})
+
+const dispatcherToPropsMapper = dispatch => {
+    return({
+        //addWidget: () => alert("hello"),
+        // save: (topicId) => actions.save(dispatch, topicId),
+        //findAllWidgets: () => actions.findAllWidgets(dispatch),
+        preview: () => actions.preview(dispatch),
+        findWidgetByTopicId: (topicId) => actions.findWidgetByTopicId(dispatch, topicId)
+    })
+}
 
 const stateToPropsMapper = (state) => ({
     widgets: state.widgets,
     previewMode: state.preview
 })
 
-export const App = connect(stateToPropsMapper,dispatcherToPropsMapper)(WidgetList)
+export const App = connect(stateToPropsMapper, dispatcherToPropsMapper)(WidgetList)

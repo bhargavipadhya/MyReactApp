@@ -53,8 +53,6 @@ export default class WidgetListEditor extends React.Component{
 
         return(
             <div>
-                <p>Widget List Editor!!!</p>
-
                 <Provider store={store}>
                     <App topicId={this.state.topicId}/>
                 </Provider>

@@ -6,7 +6,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
 
         case constants.ADD_WIDGET:
             console.log("im apparently not here")
-            let newstate={
+            let newstate = {
                 widgets: [
                     ...state.widgets,
                     {

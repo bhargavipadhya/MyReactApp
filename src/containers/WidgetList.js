@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import * as actions from "../actions";
 import WidgetContainer from '../components/WidgetListItem'
 import * as constants from "../constants";
+import ToggleButton from 'react-toggle-button'
 
 class WidgetList extends Component {
     constructor(props){
@@ -16,48 +17,55 @@ class WidgetList extends Component {
 
     componentWillReceiveProps(newProps){
        if(newProps.topicId !== this.props.topicId) {
-           this.props.findWidgetByTopicId(newProps.topicId);
+           actions.findWidgetByTopicId(this.props.dispatch,newProps.topicId);
        }
     }
 
     render(){
     return(
         <div>
-            <p>Widget List {this.props.widgets.length}</p>
-            <button hidden={this.props.previewMode} onClick={()=>actions.save(this.props.dispatch, this.props.topicId)}>Save</button>
-            <button onClick={()=>actions.preview(this.props.dispatch, this.props.topicId)}>Preview</button>
-            <ul>
-                {this.props.widgets.map(widget=> (
-                    <WidgetContainer key={widget.id}
-                                     text={widget.text}
-                                     widgetId={widget.id}
-                                     widgetType={widget.widgetType}
-                                     widget={widget}
-                                     preview={this.props.previewMode}
-                                     topicId={this.props.topicId}/>
-                ))}
-            </ul>
+            <div className="float-right" style={{marginRight:"10px",marginTop:"10px", width: '50%', padding: '5px'}}>
+                <button hidden={this.props.previewMode}
+                        onClick={()=>actions.save(this.props.dispatch, this.props.topicId)}
+                className='btn btn-success'>Save</button>
+                <b>Preview</b>
+                <ToggleButton onClick={()=>actions.preview(this.props.dispatch, this.props.topicId)} value={this.props.previewMode}/>
+            </div>
+            <br/>
+            <div style={{marginTop:"40px"}} className="container-fluid">
+                <ul>
+                    {this.props.widgets.map(widget=> (
+                        <WidgetContainer key={widget.id}
+                                         text={widget.text}
+                                         widgetId={widget.id}
+                                         widgetType={widget.widgetType}
+                                         widget={widget}
+                                         preview={this.props.previewMode}
+                                         topicId={this.props.topicId}/>
+                    ))}
+                </ul>
+            </div>
             <button onClick={()=>{
-                actions.addWidget(this.props.dispatch, this.props.topicId)
+                actions.addWidget(this.props.dispatch,this.props.topicId)
             }}>Add Widget</button>
         </div>
     )}
 }
 
 
-const dispatcherToPropsMapper = dispatch => {
-    return({
-        //addWidget: () => alert("hello"),
-        // save: (topicId) => actions.save(dispatch, topicId),
-        //findAllWidgets: () => actions.findAllWidgets(dispatch),
-        preview: () => actions.preview(dispatch),
-        findWidgetByTopicId: (topicId) => actions.findWidgetByTopicId(dispatch, topicId)
-    })
-}
+// const dispatcherToPropsMapper = dispatch => {
+//     return({
+//         //addWidget: () => alert("hello"),
+//         // save: (topicId) => actions.save(dispatch, topicId),
+//         //findAllWidgets: () => actions.findAllWidgets(dispatch),
+//         preview: () => actions.preview(dispatch),
+//         findWidgetByTopicId: (topicId) => actions.findWidgetByTopicId(dispatch, topicId)
+//     })
+// }
 
 const stateToPropsMapper = (state) => ({
     widgets: state.widgets,
     previewMode: state.preview
 })
 
-export const App = connect(stateToPropsMapper, dispatcherToPropsMapper)(WidgetList)
+export const App = connect(stateToPropsMapper)(WidgetList)

@@ -55,7 +55,7 @@ export const findWidgetByTopicId = (dispatch, topicId) => (
 
 export const addWidget = (dispatch, topicId) => (
     //console.log(topicId),
-        dispatch({type: constants.ADD_WIDGET, topicId: topicId})
+        dispatch({type: constants.ADD_WIDGET,topicId})
     )
 
 export const deleteWidget = (dispatch, id, topicId) => {

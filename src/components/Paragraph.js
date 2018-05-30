@@ -8,7 +8,6 @@ const Paragraph = ({widget, paraTextChanged, preview, widgetNameChanged}) => {
     return (
         <div>
             <div hidden={preview}>
-                {/*<h2 style={{padding:"10px"}}>{widget.widgetType}</h2>*/}
                 <div className='form-group'>
                     <textarea onChange={() => paraTextChanged(widget.id, paraElem.value)}
                               ref={node => paraElem = node}

@@ -1,37 +1,5 @@
 import * as constants from "../constants";
 
-export const headingSizeChanged = (dispatch, widgetId, newSize) => (
-    dispatch({type: constants.HEADING_SIZE_CHANGED, id: widgetId, size: newSize})
-)
-
-export const headingTextChanged = (dispatch, widgetId, newText) => (
-    dispatch({type: constants.HEADING_TEXT_CHANGED, id: widgetId, text: newText})
-)
-
-export const paraTextChanged = (dispatch, widgetId, newParaText) => (
-    dispatch({type: constants.PARA_TEXT_CHANGED, id: widgetId, paraText: newParaText})
-)
-
-export const imageURLChanged = (dispatch, widgetId, url) => (
-    dispatch({type: constants.IMAGE_URL_CHANGED, id: widgetId, imageURL: url})
-)
-
-export const linkURLChanged = (dispatch, widgetId, linkurl) => (
-    dispatch({type: constants.LINK_URL_CHANGED, id: widgetId, linkURL: linkurl})
-)
-
-export const linkTextChanged = (dispatch, widgetId, linktext) => (
-    dispatch({type: constants.LINK_TEXT_CHANGED, id: widgetId, linkText: linktext})
-)
-
-export const listTextChanged = (dispatch, widgetId, listtext) => (
-    dispatch({type: constants.LIST_TEXT_CHANGED, id: widgetId, listText: listtext})
-)
-
-export const listTypeChanged = (dispatch, widgetId, type) => (
-    dispatch({type: constants.LIST_TYPE_CHANGED, id: widgetId, listType: type})
-)
-
 export const findAllWidgets = dispatch => (
     fetch('http://localhost:8080/api/widget')
         .then(response =>  (response.json()))
@@ -54,8 +22,8 @@ export const findWidgetByTopicId = (dispatch, topicId) => (
 )
 
 export const addWidget = (dispatch, topicId) => (
-    //console.log(topicId),
-        dispatch({type: constants.ADD_WIDGET,topicId})
+        dispatch({
+            type: constants.ADD_WIDGET,topicId})
     )
 
 export const deleteWidget = (dispatch, id, topicId) => {
@@ -69,27 +37,95 @@ export const deleteWidget = (dispatch, id, topicId) => {
 }
 
 export const save = (dispatch, topicId) => (
-     dispatch({type: constants.SAVE_WIDGETS, topicId: topicId})
+     dispatch({
+         type: constants.SAVE_WIDGETS,
+         topicId: topicId
+     })
  )
 
 export const preview = (dispatch, topicId) => (
-    dispatch({type: constants.PREVIEW_WIDGET, topicId: topicId})
+    dispatch({
+        type: constants.PREVIEW_WIDGET,
+        topicId: topicId
+    })
 )
 
-export const widgetNameChanged = (dispatch, widgetId, widgetname) => (
-    dispatch(
-        {
-            type:constants.WIDGET_NAME,
-            id:widgetId,
-            widgetNameText:widgetname
-        }
-    )
-)
-
-export const selectWidgetType =(dispatch, widgetId, selectElementValue, topicId) => (
+export const selectWidgetType =(dispatch, widgetId, selectElementValue) => (
     dispatch({
         type:constants.SELECT_WIDGET_TYPE,
         id: widgetId,
-        widgetType: selectElementValue,
-        topicId: topicId})
+        widgetType: selectElementValue
+    })
+)
+
+export const headingSizeChanged = (dispatch, widgetId, newSize) => (
+    dispatch({
+        type: constants.HEADING_SIZE_CHANGED,
+        id: widgetId,
+        size: newSize
+    })
+)
+
+export const headingTextChanged = (dispatch, widgetId, newText) => (
+    dispatch({
+        type: constants.HEADING_TEXT_CHANGED,
+        id: widgetId,
+        text: newText
+    })
+)
+
+export const paraTextChanged = (dispatch, widgetId, newParaText) => (
+    dispatch({
+        type: constants.PARA_TEXT_CHANGED,
+        id: widgetId,
+        paraText: newParaText
+    })
+)
+
+export const imageURLChanged = (dispatch, widgetId, url) => (
+    dispatch({
+        type: constants.IMAGE_URL_CHANGED,
+        id: widgetId,
+        imageURL: url
+    })
+)
+
+export const linkURLChanged = (dispatch, widgetId, linkurl) => (
+    dispatch({
+        type: constants.LINK_URL_CHANGED,
+        id: widgetId,
+        linkURL: linkurl
+    })
+)
+
+export const linkTextChanged = (dispatch, widgetId, linktext) => (
+    dispatch({
+        type: constants.LINK_TEXT_CHANGED,
+        id: widgetId,
+        linkText: linktext
+    })
+)
+
+export const listTextChanged = (dispatch, widgetId, listtext) => (
+    dispatch({
+        type: constants.LIST_TEXT_CHANGED,
+        id: widgetId,
+        listText: listtext
+    })
+)
+
+export const listTypeChanged = (dispatch, widgetId, type) => (
+    dispatch({
+        type: constants.LIST_TYPE_CHANGED,
+        id: widgetId,
+        listType: type
+    })
+)
+
+export const widgetNameChanged = (dispatch, widgetId, widgetname) => (
+    dispatch({
+        type:constants.WIDGET_NAME,
+        id:widgetId,
+        widgetNameText:widgetname
+    })
 )

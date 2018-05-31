@@ -13,7 +13,7 @@ const List = ({widget, listTextChanged, listTypeChanged, preview, widgetNameChan
                 <div className='form-group'>
                     <textarea onChange={() => listTextChanged(widget.id, listTextElem.value)}
                               ref={node => listTextElem = node}
-                              value={widget.listText}
+                              value={widget.text}
                               className='form-control'
                               placeholder='Put each item in a separate row'/><br/>
                     <select onChange={() => listTypeChanged(widget.id, listTypeElem.value)}
@@ -34,8 +34,8 @@ const List = ({widget, listTextChanged, listTypeChanged, preview, widgetNameChan
                 <h4 style={{padding:"10px"}}>Preview</h4>
             </div>
             <div style={{padding:"10px"}}>
-                {widget.listType === 'Unordered List' && <UnorderedList key={widget.id} stringlist={widget.listText}/>}
-                {widget.listType === 'Ordered List' && <OrderedList key={widget.id} stringlist={widget.listText}/>}
+                {widget.listType === 'Unordered List' && <UnorderedList key={widget.id} stringlist={widget.text}/>}
+                {widget.listType === 'Ordered List' && <OrderedList key={widget.id} stringlist={widget.text}/>}
             </div>
         </div>
     )

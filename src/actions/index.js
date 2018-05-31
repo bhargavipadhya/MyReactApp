@@ -78,7 +78,7 @@ export const paraTextChanged = (dispatch, widgetId, newParaText) => (
     dispatch({
         type: constants.PARA_TEXT_CHANGED,
         id: widgetId,
-        paraText: newParaText
+        text: newParaText
     })
 )
 
@@ -102,7 +102,7 @@ export const linkTextChanged = (dispatch, widgetId, linktext) => (
     dispatch({
         type: constants.LINK_TEXT_CHANGED,
         id: widgetId,
-        linkText: linktext
+        text: linktext
     })
 )
 
@@ -110,7 +110,7 @@ export const listTextChanged = (dispatch, widgetId, listtext) => (
     dispatch({
         type: constants.LIST_TEXT_CHANGED,
         id: widgetId,
-        listText: listtext
+        text: listtext
     })
 )
 

@@ -92,7 +92,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
             return{
                 widgets: state.widgets.map(widget => {
                     if(widget.id === action.id){
-                        widget.paraText = action.paraText
+                        widget.text = action.text
                     }
                     return Object.assign({}, widget)
                 })
@@ -122,7 +122,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
             return{
                 widgets: state.widgets.map(widget => {
                     if(widget.id === action.id){
-                        widget.linkText = action.linkText
+                        widget.text = action.text
                     }
                     return Object.assign({}, widget)
                 })
@@ -132,7 +132,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
             return{
                 widgets: state.widgets.map(widget => {
                     if(widget.id === action.id){
-                        widget.listText = action.listText
+                        widget.text = action.text
                     }
                     return Object.assign({}, widget)
                 })

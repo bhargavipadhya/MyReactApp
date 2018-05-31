@@ -18,7 +18,7 @@ const Link = ({widget, linkURLChanged, linkTextChanged, preview, widgetNameChang
                            placeholder='URL'/><br/>
                     <input onChange={() => linkTextChanged(widget.id, linkTextElem.value)}
                            ref={node => linkTextElem = node}
-                           value={widget.linkText}
+                           value={widget.text}
                            className='form-control'
                            placeholder='Link Text'/><br/>
                     <input onChange={() => widgetNameChanged(widget.id, widgetNameElem.value)}
@@ -31,7 +31,7 @@ const Link = ({widget, linkURLChanged, linkTextChanged, preview, widgetNameChang
                 <h4 style={{padding:"10px"}}>Preview</h4>
             </div>
             <div style={{padding:"10px"}}>
-                {widget.widgetType === 'Link' && <a href={widget.linkURL}>{widget.linkText}</a>}
+                {widget.widgetType === 'Link' && <a href={widget.linkURL}>{widget.text}</a>}
             </div>
         </div>
     )

@@ -11,7 +11,7 @@ const Paragraph = ({widget, paraTextChanged, preview, widgetNameChanged}) => {
                 <div className='form-group'>
                     <textarea onChange={() => paraTextChanged(widget.id, paraElem.value)}
                               ref={node => paraElem = node}
-                              value={widget.paraText}
+                              value={widget.text}
                               placeholder='Paragraph Text'
                               className='form-control'/><br/>
                     <input onChange={() => widgetNameChanged(widget.id, widgetNameElem.value)}
@@ -24,7 +24,7 @@ const Paragraph = ({widget, paraTextChanged, preview, widgetNameChanged}) => {
                 <h4 style={{padding:"10px"}}>Preview</h4>
             </div>
             <div style={{padding:"10px"}}>
-                {widget.widgetType === 'Paragraph' && <p>{widget.paraText}</p>}
+                {widget.widgetType === 'Paragraph' && <p>{widget.text}</p>}
             </div>
         </div>
     )

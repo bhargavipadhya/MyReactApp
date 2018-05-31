@@ -8,8 +8,6 @@ import ToggleButton from 'react-toggle-button'
 class WidgetList extends Component {
     constructor(props){
         super(props);
-        //this.props.findAllWidgets()
-        //actions.findAllWidgets(this.props.dispatch);
     }
 
     componentDidMount(){
@@ -18,7 +16,6 @@ class WidgetList extends Component {
     componentWillReceiveProps(newProps){
        if(newProps.topicId !== this.props.topicId) {
            this.props.findWidgetByTopicId(newProps.topicId);
-           //actions.findWidgetByTopicId(this.props.dispatch,newProps.topicId);
        }
     }
 
@@ -28,16 +25,12 @@ class WidgetList extends Component {
             <div className="float-right row" style={{marginTop:"15px", marginRight:'20px'}}>
                 <div className='col-4' style={{paddingRight:'20px', paddingLeft:'0px'}}>
                     <button hidden={this.props.previewMode}
-                            onClick={() => this.props.save(this.props.topicId)
-                                //()=>actions.save(this.props.dispatch, this.props.topicId)
-                            }
+                            onClick={() => this.props.save(this.props.topicId)}
                             className='btn btn-success'>Save</button>
                 </div>
                 <div className='col-8' style={{paddingRight: '0px', paddingLeft: '20px'}}>
                     <b>Preview</b>
-                    <ToggleButton onClick={() => this.props.preview(this.props.topicId)
-                        //()=>actions.preview(this.props.dispatch, this.props.topicId)
-                    }
+                    <ToggleButton onClick={() => this.props.preview(this.props.topicId)}
                                   value={this.props.previewMode}/>
                 </div>
             </div>
@@ -55,9 +48,7 @@ class WidgetList extends Component {
                     ))}
                 </ul>
             </div>
-                <button onClick={() => this.props.addWidget(this.props.topicId)
-                    //()=>{actions.addWidget(this.props.dispatch,this.props.topicId)}
-                }
+                <button onClick={() => this.props.addWidget(this.props.topicId)}
                 className='btn btn-danger float-right'
                 style={{marginRight:'30px'}}><i className="fa fa-plus-circle"></i></button>
         </div>

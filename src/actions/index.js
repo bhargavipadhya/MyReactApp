@@ -26,11 +26,11 @@ export const addWidget = (dispatch, topicId) => (
             type: constants.ADD_WIDGET,topicId})
     )
 
-export const deleteWidget = (dispatch, id, topicId) => {
+export const deleteWidget = (dispatch, widgetId, topicId) => {
     return(
         dispatch({
             type:constants.DELETE_WIDGET,
-            id:id,
+            id: widgetId,
             topicId: topicId
         })
     )

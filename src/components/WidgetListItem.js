@@ -38,12 +38,7 @@ class WidgetListItem extends Component {
                                 </div>
                                 <div className='col-6'>
                                     <select value={this.props.widgetType}
-                                            onChange={() => this.props.selectWidgetType(this.props.widgetId, selectElement.value)
-                                                // e => (this.props.dispatch({
-                                                //     type:constants.SELECT_WIDGET_TYPE,
-                                                //     id: this.props.widgetId,
-                                                //     widgetType: selectElement.value}))
-                                                }
+                                            onChange={() => this.props.selectWidgetType(this.props.widgetId, selectElement.value)}
                                             ref={node => selectElement = node}
                                             className='form-control'>
 
@@ -55,9 +50,7 @@ class WidgetListItem extends Component {
                                     </select>
                                 </div>
                                 <div className='col-2' style={{paddingLeft:'1px', paddingRight:'1px'}}>
-                                <button className='btn btn-danger' onClick={() => this.props.deleteWidget(this.props.widgetId)
-                                    //() => actions.deleteWidget(this.props.dispatch, this.props.widgetId, this.props.topicId)
-                                }>
+                                <button className='btn btn-danger' onClick={() => this.props.deleteWidget(this.props.widgetId)}>
                                     <i className="fa fa-times" style={{color: 'white'}}></i></button></div>
                             </div>
                             <div className="clear"></div>
@@ -75,14 +68,6 @@ class WidgetListItem extends Component {
     }
 }
 
-// function immutablySwapItems(items, firstIndex, secondIndex) {
-//     const results= items.slice();
-//     const firstItem = items[firstIndex];
-//     results[firstIndex] = items[secondIndex];
-//     results[secondIndex] = firstItem;
-//
-//     return results;
-// }
 
 const dispatcherToPropsMapper = dispatch => ({
     deleteWidget: (widgetId) => actions.deleteWidget(dispatch, widgetId),

@@ -17,7 +17,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                     }
                 ],
                 topicId: action.topicId,
-                preview:state.preview
+                preview: state.preview
             }
             return newstate;
 
